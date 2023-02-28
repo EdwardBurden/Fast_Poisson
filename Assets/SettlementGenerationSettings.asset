@@ -18,44 +18,26 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.12272237
-      value: 0.3083669
-      inSlope: 1.6408617
-      outSlope: 1.6408617
+      inSlope: 0.089731894
+      outSlope: 0.089731894
       tangentMode: 34
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.1988009
-      value: 0.3668716
-      inSlope: -0.26395792
-      outSlope: -0.26395792
+      time: 0.804471
+      value: 0.07218671
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.50368303
-      value: 0.47414386
-      inSlope: -0.28094012
-      outSlope: -0.28094012
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.85812855
-      value: 0.0907473
-      inSlope: 0.24479203
-      outSlope: 0.24479203
+      time: 0.81321025
+      value: 0.54658324
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -63,11 +45,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 2.4274178
+      outSlope: 2.4274178
+      tangentMode: 34
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -96,13 +78,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regionExtent: 15
+  regionExtent: 20
   minBuildingRadius: 0.2
-  maxBuildingRadius: 2
+  maxBuildingRadius: 1
   rejectionSamples: 30
   settlemenSpawnInfos:
   - buildings:
     - buildingPrefab: {fileID: 667110673395168973, guid: be6639876e6434242ad5f19c5001067c, type: 3}
       spawnChance: 0
     radius: 0
-  noiseModifier: 0
+  radiusNoisePercentage: 0.423
+  radiusNoiseModifier: 2

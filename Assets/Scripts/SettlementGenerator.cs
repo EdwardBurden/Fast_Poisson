@@ -72,12 +72,14 @@ public class SettlementGenerator : MonoBehaviour
 	private void AddBuildingPrefab(PoissonPoint point)
 	{
 		Vector3 world = point.pos.ToVector3() - generationSettings.offset + this.transform.position;
-		int angleamount = 16;
-		float y = Random.Range(0, angleamount + 1) * (360 / angleamount);
-		Quaternion rotation = Quaternion.Euler(0, y, 0);
-		GameObject gg = Instantiate(FindBuildingPrefab(point), world, rotation, this.transform);
-		gg.transform.localScale += new Vector3(0, point.radius, 0);
-
+		if (Physics.Raycast(world + (Vector3.up * 10), Vector3.down, out RaycastHit hit, 100))
+		{
+			int angleamount = 16;
+			float y = Random.Range(0, angleamount + 1) * (360 / angleamount);
+			Quaternion rotation = Quaternion.Euler(0, y, 0);
+			GameObject gg = Instantiate(FindBuildingPrefab(point), hit.point, rotation, this.transform);
+			//gg.transform.localScale += new Vector3(0, point.radius, 0);
+		}
 	}
 
 
