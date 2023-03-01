@@ -18,26 +18,26 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0.089731894
-      outSlope: 0.089731894
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.804471
-      value: 0.07218671
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.6766238
+      value: 0.08553524
+      inSlope: 0.3252478
+      outSlope: 0.3252478
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.81321025
-      value: 0.54658324
-      inSlope: 0
-      outSlope: 0
+      time: 0.9381087
+      value: 0.34425533
+      inSlope: 1.2687345
+      outSlope: 1.2687345
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -45,11 +45,11 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2.4274178
-      outSlope: 2.4274178
-      tangentMode: 34
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -78,14 +78,15 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regionExtent: 20
-  minBuildingRadius: 0.2
-  maxBuildingRadius: 1
+  regionExtent: 40
+  minBuildingRadius: 0.8
+  maxBuildingRadius: 4
   rejectionSamples: 30
   settlemenSpawnInfos:
   - buildings:
-    - buildingPrefab: {fileID: 667110673395168973, guid: be6639876e6434242ad5f19c5001067c, type: 3}
+    - buildingPrefab: {fileID: 5888597558005441121, guid: 08f734f1c98d25441872f2dec7a900e5, type: 3}
       spawnChance: 0
     radius: 0
-  radiusNoisePercentage: 0.423
+  radiusNoisePercentage: 0
   radiusNoiseModifier: 2
+  maxPoints: 500

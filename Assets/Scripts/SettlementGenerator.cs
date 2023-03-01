@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 using Color = UnityEngine.Color;
 using Random = UnityEngine.Random;
 
@@ -16,7 +17,8 @@ public class SettlementGenerator : MonoBehaviour
 	private PoissonGrid poissonGrid;
 	private float perlinSeed;
 	//HANDLE GAMEOBJECT SIDE THINGS HERE
-
+	private Dictionary<PoissonPoint, GameObject> buildingsSpawned = new Dictionary<PoissonPoint, GameObject>();
+	private int generationlevel = 0;
 
 	private void Awake()
 	{
@@ -30,26 +32,47 @@ public class SettlementGenerator : MonoBehaviour
 	{
 		float sampledRadius = generationSettings.SampleRadius((generationSettings.regionSize / 2), transform, perlinSeed);
 		PoissonPoint start = poissonGrid.AddPoint(generationSettings.regionSize / 2, sampledRadius);
-		AddBuildingPrefab(start);
-		while (true)
+		buildingsSpawned.Add(start, AddBuildingPrefab(start));
+
+		int count = 0;
+		while (count < generationSettings.maxPoints)
 		{
 			yield return new WaitForSeconds(waitTime);
 			for (int i = 0; i < addAmount; i++)
 			{
 				TryAddBuilding();
+				count++;
 			}
+			yield return new WaitForSeconds(waitTime);
 			for (int i = 0; i < overrideAmount; i++)
 			{
 				TryReplaceBuilding();
 			}
+			//StaticBatchingUtility.Combine(this.transform.gameObject);
 		}
-
+		StaticBatchingUtility.Combine(this.transform.gameObject);
 	}
 
 	private void TryReplaceBuilding() //TODO
 	{
-
-
+		//Select point , do last point for now
+		KeyValuePair<PoissonPoint, GameObject> keyValuePair = buildingsSpawned.TakeLast(addAmount).FirstOrDefault();
+		//tell grid to remove point
+		poissonGrid.RemovePoint(keyValuePair.Key);
+		Destroy(buildingsSpawned[keyValuePair.Key]);
+		buildingsSpawned.Remove(keyValuePair.Key);
+		//sample radius at postion , default to maxbuildingradius for now
+		float sampledRadius = generationSettings.maxBuildingRadius/2; //generationSettings.SampleRadius(keyValuePair.Key.pos, transform, perlinSeed);
+																	//remove any points overlapping
+		List<PoissonPoint> removed = poissonGrid.RemovePointsOverlapping(keyValuePair.Key.pos, sampledRadius);
+		foreach (var item in removed)
+		{
+			Destroy(buildingsSpawned[item]);
+			buildingsSpawned.Remove(item);
+		}
+		//place point as new untested point
+		PoissonPoint poissonPoint = poissonGrid.AddPoint(keyValuePair.Key.pos, sampledRadius);
+		buildingsSpawned.Add(poissonPoint, AddBuildingPrefab(poissonPoint));
 	}
 
 	private void TryAddBuilding() //Clean
@@ -66,20 +89,20 @@ public class SettlementGenerator : MonoBehaviour
 		{
 			return;
 		}
-		AddBuildingPrefab(point);
-
+		buildingsSpawned.Add(point, AddBuildingPrefab(point));
 	}
-	private void AddBuildingPrefab(PoissonPoint point)
+	private GameObject AddBuildingPrefab(PoissonPoint point)
 	{
+		GameObject building = null;
 		Vector3 world = point.pos.ToVector3() - generationSettings.offset + this.transform.position;
 		if (Physics.Raycast(world + (Vector3.up * 10), Vector3.down, out RaycastHit hit, 100))
 		{
 			int angleamount = 16;
 			float y = Random.Range(0, angleamount + 1) * (360 / angleamount);
 			Quaternion rotation = Quaternion.Euler(0, y, 0);
-			GameObject gg = Instantiate(FindBuildingPrefab(point), hit.point, rotation, this.transform);
-			//gg.transform.localScale += new Vector3(0, point.radius, 0);
+			building = Instantiate(FindBuildingPrefab(point), hit.point, rotation, this.transform);
 		}
+		return building;
 	}
 
 
@@ -136,48 +159,22 @@ public class SettlementGenerator : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		/*	Gizmos.color = Color.yellow;
-			Gizmos.DrawCube(this.transform.position, new Vector3(regionExtent, 0, regionExtent));
-
-			if (poissonCells != null)
-			{
-				for (int i = 0; i < poissonCells.GetLength(0); i++)
-				{
-					for (int j = 0; j < poissonCells.GetLength(1); j++)
-					{
-						if (poissonCells[i, j].pointInCell != null)
-						{
-							Gizmos.color = Color.red;
-							Gizmos.DrawCube(new Vector3(poissonCells[i, j].x, poissonCells[i, j].pushedPoints.Count, poissonCells[i, j].z), Vector3.one * 0.4f);
-							//Gizmos.DrawSphere(new Vector3(poissonCells[i, j].pointInCell.pos.x, 0, poissonCells[i, j].pointInCell.pos.y), 0.1f);
-							continue;
-						}
-
-						Gizmos.color = Color.yellow;
-						if (poissonCells[i, j].pushedPoints.Count > 0)
-						{
-							Gizmos.color = Color.green;
-						}
-						Gizmos.DrawCube(new Vector3(poissonCells[i, j].x, poissonCells[i, j].pushedPoints.Count, poissonCells[i, j].z), Vector3.one * 1f);
-					}
-				}
-			}
-
-			//Gizmos.color = Color.yellow;
-			//Gizmos.DrawCube(this.transform.position, new Vector3(settlementRadius, 0, settlementRadius));
-
-
-			if (spawnedPoints == null)
-			{
-				return;
-			}
-			foreach (PoissonPoint localPoint in spawnedPoints)
-			{
-				Gizmos.color = Color.red;
-				//	Gizmos.DrawSphere(new Vector3(localPoint.pos.x, 0, localPoint.pos.y), localPoint.radius);
-				Gizmos.color = Color.blue;
-				Gizmos.DrawSphere(new Vector3(localPoint.pos.x, 0, localPoint.pos.y), localPoint.radius / 2);
-			}*/
+		if (poissonGrid == null)
+		{
+			return;
+		}
+		List<PoissonPoint> spawnedPoints = poissonGrid.spawnedPoints;
+		if (spawnedPoints == null)
+		{
+			return;
+		}
+		foreach (PoissonPoint localPoint in spawnedPoints)
+		{
+			Gizmos.color = Color.red;
+			//	Gizmos.DrawSphere(new Vector3(localPoint.pos.x, 0, localPoint.pos.y), localPoint.radius);
+			Gizmos.color = Color.blue;
+			Gizmos.DrawSphere(new Vector3(localPoint.pos.x - generationSettings.offset.x + this.transform.position.x, 0, localPoint.pos.y - generationSettings.offset.z + this.transform.position.z), localPoint.radius / 2);
+		}
 	}
 
 }

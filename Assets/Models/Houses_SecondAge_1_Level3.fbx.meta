@@ -1,9 +1,39 @@
 fileFormatVersion: 2
-guid: 2168f65b5e3a34e4a9bc4b02358b6e58
+guid: 6e70983e3644b81489e43fa8453df86c
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: 61751adc4df914a4a84f96745cefbf7c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stone
+    second: {fileID: 2100000, guid: c288cc50bc0cab7498706eee9e4a91a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stone_Light
+    second: {fileID: 2100000, guid: edc43bc2e8f4d2e40855bd5dbb3aa14a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Walls
+    second: {fileID: 2100000, guid: 20f50581f1cc5d04aa826d8656118a1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood
+    second: {fileID: 2100000, guid: 6a912973a59e17b498df70f5568dcad9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_Light
+    second: {fileID: 2100000, guid: 2f2df03b4a1818f4a9ca05531fc7e4e3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -32,7 +62,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1

@@ -15,6 +15,7 @@ public class SettlementGenerationSettings : ScriptableObject
 	[SerializeField] public SettlemenSpawnInfo[] settlemenSpawnInfos;
 	[SerializeField][Range(0, 1)] public float radiusNoisePercentage = 0.1f; //the amount of points effected 
 	[SerializeField] public float radiusNoiseModifier = 1f; //the severity of the difference  form the noise
+	[SerializeField] public int maxPoints = 1000; //the severity of the difference  form the noise
 
 	public Vector2 regionSize => new Vector2(regionExtent, regionExtent);
 	public Vector3 offset => new Vector3(regionSize.x, 0, regionSize.y) / 2.0f;

@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 //Could be mono? will return to later
 public class PoissonGrid : MonoBehaviour
 {
 	private PoissonCell[,] grid;
-	private List<PoissonPoint> spawnedPoints;
+	public List<PoissonPoint> spawnedPoints; //temp public
 	private Vector2 regionSize;
 	private float minRadius;
 	private float cellSize;
@@ -32,6 +33,42 @@ public class PoissonGrid : MonoBehaviour
 			return false;
 		}
 		return true;
+	}
+
+	public List<PoissonPoint> RemovePointsOverlapping(Vector2 pos, float sampledRadius)
+	{
+		List<PoissonPoint> removedPoints = new List<PoissonPoint>();
+		int cellX = (int)(pos.x / cellSize);
+		int cellY = (int)(pos.y / cellSize);
+		int cellLength = Mathf.CeilToInt(sampledRadius / cellSize);
+		int searchStartX = Mathf.Max(0, cellX - cellLength);
+		int searchEndX = Mathf.Min(cellX + cellLength, grid.GetLength(0) - 1);
+		int searchStartY = Mathf.Max(0, cellY - cellLength);
+		int searchEndY = Mathf.Min(cellY + cellLength, grid.GetLength(1) - 1);
+
+		for (int x = searchStartX; x <= searchEndX; x++)
+		{
+			for (int y = searchStartY; y <= searchEndY; y++)
+			{
+				List<PoissonPoint> pushedPoints = grid[x, y].pushedPoints;
+				for (int i = 0; i < pushedPoints.Count; i++)
+				{
+					float sqrDst = (pos - pushedPoints[i].pos).sqrMagnitude;
+					if (sqrDst < sampledRadius * sampledRadius || sqrDst < pushedPoints[i].radius * pushedPoints[i].radius)
+					{
+						removedPoints.Add(pushedPoints[i]);
+						RemovePoint(pushedPoints[i]);
+					}
+				}
+			}
+		}
+		return removedPoints;
+	}
+
+	public void RemovePoint(PoissonPoint point)
+	{
+		PullPointOutOfGrid(point);
+		spawnedPoints.Remove(point);
 	}
 
 	public PoissonPoint AddPoint(Vector2 candidate, float sampledRadius)
@@ -93,6 +130,26 @@ public class PoissonGrid : MonoBehaviour
 		}
 	}
 
+	private void PullPointOutOfGrid(PoissonPoint poissonPoint)
+	{
+		int cellX = (int)(poissonPoint.pos.x / cellSize);
+		int cellY = (int)(poissonPoint.pos.y / cellSize);
+		int cellLength = Mathf.CeilToInt(poissonPoint.radius / cellSize);
+		int searchStartX = Mathf.Max(0, cellX - cellLength);
+		int searchEndX = Mathf.Min(cellX + cellLength, grid.GetLength(0) - 1);
+		int searchStartY = Mathf.Max(0, cellY - cellLength);
+		int searchEndY = Mathf.Min(cellY + cellLength, grid.GetLength(1) - 1);
+
+		grid[cellX, cellY].pointInCell = null;
+		for (int x = searchStartX; x <= searchEndX; x++)
+		{
+			for (int y = searchStartY; y <= searchEndY; y++)
+			{
+				grid[x, y].pushedPoints.Remove(poissonPoint);
+			}
+		}
+	}
+
 	private PoissonCell[,] CreateGrid()
 	{
 		PoissonCell[,] grid = new PoissonCell[Mathf.CeilToInt(regionSize.x / cellSize), Mathf.CeilToInt(regionSize.y / cellSize)];
@@ -104,20 +161,5 @@ public class PoissonGrid : MonoBehaviour
 			}
 		}
 		return grid;
-	}
-
-	private void OnDrawGizmos()
-	{
-		if (spawnedPoints == null)
-		{
-			return;
-		}
-		foreach (PoissonPoint localPoint in spawnedPoints)
-		{
-			Gizmos.color = Color.red;
-			//	Gizmos.DrawSphere(new Vector3(localPoint.pos.x, 0, localPoint.pos.y), localPoint.radius);
-			Gizmos.color = Color.blue;
-			Gizmos.DrawSphere(new Vector3(localPoint.pos.x, 0, localPoint.pos.y), localPoint.radius / 2);
-		}
 	}
 }
