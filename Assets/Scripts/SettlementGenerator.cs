@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 using Color = UnityEngine.Color;
@@ -17,8 +19,10 @@ public class SettlementGenerator : MonoBehaviour
 	private PoissonGrid poissonGrid;
 	private float perlinSeed;
 	//HANDLE GAMEOBJECT SIDE THINGS HERE
-	private Dictionary<PoissonPoint, GameObject> buildingsSpawned = new Dictionary<PoissonPoint, GameObject>();
+	private List<BuildingPoint> buildingsSpawned = new List<BuildingPoint>();
 	private int generationlevel = 0;
+
+	Quaternion quaternion;
 
 	private void Awake()
 	{
@@ -32,47 +36,66 @@ public class SettlementGenerator : MonoBehaviour
 	{
 		float sampledRadius = generationSettings.SampleRadius((generationSettings.regionSize / 2), transform, perlinSeed);
 		PoissonPoint start = poissonGrid.AddPoint(generationSettings.regionSize / 2, sampledRadius);
-		buildingsSpawned.Add(start, AddBuildingPrefab(start));
+		buildingsSpawned.Add(new BuildingPoint(start, AddBuildingPrefab(start)));
 
 		int count = 0;
 		while (count < generationSettings.maxPoints)
 		{
+			SetRotation();
 			yield return new WaitForSeconds(waitTime);
 			for (int i = 0; i < addAmount; i++)
 			{
 				TryAddBuilding();
 				count++;
 			}
-			yield return new WaitForSeconds(waitTime);
-			for (int i = 0; i < overrideAmount; i++)
+			if (count > 100)
 			{
-				TryReplaceBuilding();
+				yield return new WaitForSeconds(waitTime);
+				for (int i = 0; i < overrideAmount; i++)
+				{
+					TryReplaceBuilding(generationlevel);
+				}
 			}
 			//StaticBatchingUtility.Combine(this.transform.gameObject);
 		}
 		StaticBatchingUtility.Combine(this.transform.gameObject);
 	}
 
-	private void TryReplaceBuilding() //TODO
+	private void TryReplaceBuilding(int level)
 	{
-		//Select point , do last point for now
-		KeyValuePair<PoissonPoint, GameObject> keyValuePair = buildingsSpawned.TakeLast(addAmount).FirstOrDefault();
-		//tell grid to remove point
-		poissonGrid.RemovePoint(keyValuePair.Key);
-		Destroy(buildingsSpawned[keyValuePair.Key]);
-		buildingsSpawned.Remove(keyValuePair.Key);
-		//sample radius at postion , default to maxbuildingradius for now
-		float sampledRadius = generationSettings.maxBuildingRadius/2; //generationSettings.SampleRadius(keyValuePair.Key.pos, transform, perlinSeed);
-																	//remove any points overlapping
-		List<PoissonPoint> removed = poissonGrid.RemovePointsOverlapping(keyValuePair.Key.pos, sampledRadius);
-		foreach (var item in removed)
+		//Take list of 
+
+		List<BuildingPoint> points = buildingsSpawned.Where(x => x.buildingLevel < level).TakeLast(addAmount).ToList();
+		BuildingPoint buildingPoint = points.ElementAt(Random.Range(0, points.Count));
+
+		poissonGrid.RemovePoint(buildingPoint.poissonPoint);
+		Destroy(buildingPoint.building);
+
+		float sampledRadius = generationSettings.SampleRadiusAtLevel(buildingPoint.poissonPoint, transform, perlinSeed, level);
+		//	float sampledRadius = generationSettings.SampleOverrideRadius(keyValuePair.Key.pos, transform, perlinSeed);
+		//remove any points overlapping
+		List<PoissonPoint> removed = poissonGrid.RemovePointsOverlapping(buildingPoint.poissonPoint.pos, sampledRadius);
+		foreach (PoissonPoint removedPoint in removed)
 		{
-			Destroy(buildingsSpawned[item]);
-			buildingsSpawned.Remove(item);
+			BuildingPoint building = FindBuildingPoint(removedPoint);
+			Destroy(building.building);
+			buildingsSpawned.Remove(building);
 		}
 		//place point as new untested point
-		PoissonPoint poissonPoint = poissonGrid.AddPoint(keyValuePair.Key.pos, sampledRadius);
-		buildingsSpawned.Add(poissonPoint, AddBuildingPrefab(poissonPoint));
+		PoissonPoint poissonPoint = poissonGrid.AddPoint(buildingPoint.poissonPoint.pos, sampledRadius);
+		buildingsSpawned.Add(new BuildingPoint(poissonPoint, AddBuildingPrefab(poissonPoint)));
+	}
+
+	private BuildingPoint FindBuildingPoint(PoissonPoint poissonPoint)
+	{
+		for (int i = 0; i < buildingsSpawned.Count; i++)
+		{
+			if (buildingsSpawned[i].poissonPoint == poissonPoint || buildingsSpawned[i].poissonPoint.pos == poissonPoint.pos)
+			{
+				return buildingsSpawned[i];
+			}
+		}
+		return null;
 	}
 
 	private void TryAddBuilding() //Clean
@@ -89,18 +112,26 @@ public class SettlementGenerator : MonoBehaviour
 		{
 			return;
 		}
-		buildingsSpawned.Add(point, AddBuildingPrefab(point));
+		buildingsSpawned.Add(new BuildingPoint(point, AddBuildingPrefab(point)));
 	}
+
+	private void SetRotation()
+	{
+		int angleamount = 16;
+		float y = Random.Range(0, angleamount + 1) * (360 / angleamount);
+		quaternion = Quaternion.Euler(0, y, 0);
+	}
+
 	private GameObject AddBuildingPrefab(PoissonPoint point)
 	{
 		GameObject building = null;
 		Vector3 world = point.pos.ToVector3() - generationSettings.offset + this.transform.position;
 		if (Physics.Raycast(world + (Vector3.up * 10), Vector3.down, out RaycastHit hit, 100))
 		{
-			int angleamount = 16;
-			float y = Random.Range(0, angleamount + 1) * (360 / angleamount);
-			Quaternion rotation = Quaternion.Euler(0, y, 0);
-			building = Instantiate(FindBuildingPrefab(point), hit.point, rotation, this.transform);
+			//int angleamount = 7;
+			//float y = Random.Range(0, angleamount + 1) * (360 / angleamount);
+			//Quaternion rotation = Quaternion.Euler(0, y, 0);
+			building = Instantiate(FindBuildingPrefab(point), hit.point, quaternion, this.transform);
 		}
 		return building;
 	}
@@ -150,9 +181,9 @@ public class SettlementGenerator : MonoBehaviour
 
 	private GameObject FindBuildingPrefab(PoissonPoint poissonPoint) //TEMP
 	{
-		return generationSettings.settlemenSpawnInfos[0].buildings[0].buildingPrefab;
-		SettlemenSpawnInfo buildingsFiltered = generationSettings.settlemenSpawnInfos.OrderBy(x => Mathf.Abs(x.radius - poissonPoint.radius)).FirstOrDefault();
-		return buildingsFiltered.SelectRandomBuilding();
+		//return generationSettings.settlemenSpawnInfos[0].buildings[0].buildingPrefab;
+		SettlementBuildings buildingsFiltered = generationSettings.settlemenSpawnInfos.OrderBy(x => Mathf.Abs(x.minRadius - poissonPoint.radius)).FirstOrDefault(); //TODO replace
+		return buildingsFiltered.SelectRandomBuilding().buildingPrefab;
 	}
 
 

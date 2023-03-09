@@ -59,6 +59,10 @@ public class PoissonGrid : MonoBehaviour
 						removedPoints.Add(pushedPoints[i]);
 						RemovePoint(pushedPoints[i]);
 					}
+					else
+					{
+						pushedPoints[i].tested = false;
+					}
 				}
 			}
 		}

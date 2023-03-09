@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.009
+      value: -0.035
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.031
+      value: 0.196
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -97,7 +97,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_ConstrainProportionsScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_Enabled
@@ -111,6 +111,10 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1c73e3d81b54f7947819192524bb52b7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6e70983e3644b81489e43fa8453df86c, type: 3}
       propertyPath: m_Name
       value: Houses_SecondAge_1_Level3

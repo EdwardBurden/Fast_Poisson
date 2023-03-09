@@ -5,20 +5,36 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [Serializable]
-public class SettlementBuildingSpawnInfo
+public class SettlemetBuildingSpawnData
 {
 	public GameObject buildingPrefab;
 	public float spawnChance; //0.2 , 0.6 0.9
 }
 
 [Serializable]
-public class SettlemenSpawnInfo
+public class SettlementBuildings
 {
-	public SettlementBuildingSpawnInfo[] buildings;
-	public float radius;
+	public SettlemetBuildingSpawnData[] buildings;
+	public float minRadius;
+	public float maxRadius;
 
-	public GameObject SelectRandomBuilding()
+
+	public SettlemetBuildingSpawnData SelectRandomBuilding()
 	{
-		return buildings[Random.Range(0, buildings.Length)].buildingPrefab;
+		float totalChance = 0;
+		for (int i = 0; i < buildings.Length; i++)
+		{
+			totalChance += buildings[i].spawnChance;
+		}
+		while (true)
+		{
+			int buildingIndex = Random.Range(0, buildings.Length);
+			float chance = buildings[buildingIndex].spawnChance / totalChance;
+			Random.Range(0, 1);
+			if (chance > Random.Range(0.0f, 1.0f))
+			{
+				return buildings[buildingIndex];
+			}
+		}
 	}
 }
