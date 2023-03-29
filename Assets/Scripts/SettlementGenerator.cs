@@ -1,12 +1,15 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.Progress;
 using Color = UnityEngine.Color;
+using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 public class SettlementGenerator : MonoBehaviour
@@ -21,6 +24,7 @@ public class SettlementGenerator : MonoBehaviour
 	//HANDLE GAMEOBJECT SIDE THINGS HERE
 	private List<BuildingPoint> buildingsSpawned = new List<BuildingPoint>();
 	private int generationlevel = 0;
+	public int maxPoints = 100;
 
 	Quaternion quaternion;
 
@@ -30,6 +34,26 @@ public class SettlementGenerator : MonoBehaviour
 		perlinSeed = Random.Range(0.0f, 10000f);
 		poissonGrid.CreateGrid(generationSettings.regionSize, generationSettings.minBuildingRadius);
 		StartCoroutine(Temp());
+		//TestingTime();
+	}
+
+	private void TestingTime()
+	{
+
+		Stopwatch stopwatch = Stopwatch.StartNew();
+
+		while (poissonGrid.spawnedPoints.Count < maxPoints)
+		{
+
+			TryCreatePoint();
+			if (poissonGrid.FindUntestedPoints().Count == 0)
+			{
+				break;
+			}
+		}
+
+		stopwatch.Stop();
+		Debug.Log(stopwatch.ElapsedMilliseconds + "  " + poissonGrid.spawnedPoints.Count);
 	}
 
 	private IEnumerator Temp() //TEMP

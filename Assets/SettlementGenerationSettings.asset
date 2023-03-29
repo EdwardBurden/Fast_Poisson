@@ -18,45 +18,18 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.12992328
-      value: 0.111542
-      inSlope: 0.07798932
-      outSlope: 0.07798932
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.48020113
-      value: 0.045757882
-      inSlope: 0.3783516
-      outSlope: 0.3783516
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.7703406
-      value: 0.3551976
-      inSlope: 1.1733344
-      outSlope: 1.1733344
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0
@@ -111,31 +84,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  regionExtent: 80
-  minBuildingRadius: 0.8
-  maxBuildingRadius: 2.5
+  regionExtent: 50
+  minBuildingRadius: 1.2
+  maxBuildingRadius: 2.2
   rejectionSamples: 30
   settlemenSpawnInfos:
   - buildings:
     - buildingPrefab: {fileID: 5888597558005441121, guid: 08f734f1c98d25441872f2dec7a900e5, type: 3}
       spawnChance: 1
-    minRadius: 0.8
-    maxRadius: 0.8
-  - buildings:
-    - buildingPrefab: {fileID: 4256907107948853979, guid: f90aacc46aae37247b9b3a3bea165815, type: 3}
-      spawnChance: 1
     minRadius: 1.2
     maxRadius: 1.2
   - buildings:
-    - buildingPrefab: {fileID: 3802702872860583475, guid: 891ce7f71e230bb49967fde5d9240b8b, type: 3}
+    - buildingPrefab: {fileID: 1939999936162156955, guid: 2385423951cfd2044b87df8ba5809288, type: 3}
       spawnChance: 1
-    minRadius: 2
-    maxRadius: 2
+    - buildingPrefab: {fileID: 4256907107948853979, guid: f90aacc46aae37247b9b3a3bea165815, type: 3}
+      spawnChance: 10
+    minRadius: 1.4
+    maxRadius: 1.4
   - buildings:
-    - buildingPrefab: {fileID: 6703389035672836323, guid: c3398694ff8e28f40970bd7722371230, type: 3}
+    - buildingPrefab: {fileID: 3490997956866255632, guid: 1bf8b24dd0d730a419d1dda9aa2a86d3, type: 3}
       spawnChance: 1
-    minRadius: 2.5
-    maxRadius: 2.5
-  radiusNoisePercentage: 1
-  radiusNoiseModifier: 0.6
+    - buildingPrefab: {fileID: 6055663765765858972, guid: 58190676d18b9c740a9db7668633743d, type: 3}
+      spawnChance: 1
+    - buildingPrefab: {fileID: 7821370817331110104, guid: d4c98e8a635c46f4784e335f7e711d01, type: 3}
+      spawnChance: 1
+    - buildingPrefab: {fileID: 3371520804576065835, guid: 1c27d69f68ec66d499fc820e8917395b, type: 3}
+      spawnChance: 0.1
+    minRadius: 1.6
+    maxRadius: 1.6
+  - buildings:
+    - buildingPrefab: {fileID: 8045432453751475523, guid: bd6b223c3a88d5d419bb0993bc8962d1, type: 3}
+      spawnChance: 1
+    minRadius: 2.2
+    maxRadius: 2.2
+  radiusNoisePercentage: 0
+  radiusNoiseModifier: 0.59
   maxPoints: 1000
