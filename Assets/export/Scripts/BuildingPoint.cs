@@ -15,4 +15,11 @@ public class BuildingPoint
 		this.building = building;
 		buildingLevel = 0;
 	}
+
+	public BuildingPoint(PoissonPoint poissonPoint, GameObject building , int level)
+	{
+		this.poissonPoint = poissonPoint;
+		this.building = building;
+		buildingLevel = level;
+	}
 }

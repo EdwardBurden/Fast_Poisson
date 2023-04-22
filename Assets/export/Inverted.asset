@@ -1,0 +1,272 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6238ed70ef3564e8d2f8daa20187d2, type: 3}
+  m_Name: Inverted
+  m_EditorClassIdentifier: 
+  radiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.015693665
+      value: 1.0626526
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.009468969
+      value: 0.5237938
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.08363187
+      value: 1.0047076
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.15998322
+      value: 0.53753626
+      inSlope: -4.957075
+      outSlope: -4.957075
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.24947172
+      value: 0.18262693
+      inSlope: -4.067647
+      outSlope: -4.067647
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.34709775
+      value: -0.22357965
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.55859464
+      value: 0.59207904
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.63252956
+      value: 0.2742939
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7361091
+      value: 0.5832052
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7980852
+      value: 0.20658594
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.93945706
+      value: 0.6215138
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0093994
+      value: -0.17670822
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  overideRadiusCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  heightCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.27787393
+      value: 0.95550853
+      inSlope: -1.321471
+      outSlope: -1.321471
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.3380587
+      value: 0.820603
+      inSlope: -1.9661505
+      outSlope: -1.9661505
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.44082946
+      value: 0.775322
+      inSlope: -1.4134101
+      outSlope: -1.4134101
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5279598
+      value: 0.75593114
+      inSlope: -1.605094
+      outSlope: -1.605094
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.66843116
+      value: 0.5483345
+      inSlope: -1.2808992
+      outSlope: -1.2808992
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8059297
+      value: 0.40396437
+      inSlope: -1.1894641
+      outSlope: -1.1894641
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  regionExtent: 50
+  minBuildingRadius: 0.7
+  maxBuildingRadius: 3
+  minHeight: 1
+  maxheight: 5
+  rejectionSamples: 30
+  settlemenSpawnInfos:
+  - buildings:
+    - buildingPrefab: {fileID: 3555510043867475982, guid: 5cc4b01df4c5dab42a556fd0eae86762, type: 3}
+      spawnChance: 5
+    - buildingPrefab: {fileID: 5226005206385391359, guid: f1cd0784b8c188245bf267741e74f41b, type: 3}
+      spawnChance: 1
+    - buildingPrefab: {fileID: 6363235907695158732, guid: bdabc12bfb63beb4da301d19454c31fe, type: 3}
+      spawnChance: 1
+    radius: 1
+    height: 5
+  - buildings:
+    - buildingPrefab: {fileID: 6474720651248903240, guid: 2b27d243597a0ba4ba45f22ca88f5d0d, type: 3}
+      spawnChance: 1
+    - buildingPrefab: {fileID: 7552268640218646932, guid: 9267133adbc393045ba1dc7ad6170b28, type: 3}
+      spawnChance: 1
+    radius: 1.8
+    height: 1.5
+  - buildings:
+    - buildingPrefab: {fileID: 6341277713788029828, guid: ff24e33c362988d478f5a992cb44dadd, type: 3}
+      spawnChance: 1
+    radius: 3
+    height: 1
+  - buildings:
+    - buildingPrefab: {fileID: 6459380698996096499, guid: 3e272274af9198b4ea978d8722c76931, type: 3}
+      spawnChance: 1
+    - buildingPrefab: {fileID: 8057277968568776298, guid: cd6c09945df94d645b1f1b5d1aeb32f9, type: 3}
+      spawnChance: 1
+    - buildingPrefab: {fileID: 5678432181326720481, guid: 801da32f8960b8c4ea4d29d3b9652cc5, type: 3}
+      spawnChance: 1
+    radius: 0.7
+    height: 1
+  radiusNoisePercentage: 1
+  radiusNoiseModifier: 1
+  maxPoints: 1000
+  centerBuilding: {fileID: 4075245650497664944, guid: 78317519e1422f3479143c31e4a1adad, type: 3}
+  CenterRadius: 3

@@ -15,8 +15,9 @@ public class SettlemetBuildingSpawnData
 public class SettlementBuildings
 {
 	public SettlemetBuildingSpawnData[] buildings;
-	public float minRadius;
-	public float maxRadius;
+	public float radius;
+	public float height;
+	//public float maxRadius;
 
 
 	public SettlemetBuildingSpawnData SelectRandomBuilding()
